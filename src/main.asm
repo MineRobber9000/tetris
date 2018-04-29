@@ -39,7 +39,7 @@ Unknown005b:
         push hl
         push de
         push bc
-        call $006b
+        call Unknown006b
         ld a, $01
         ld [$ffcc], a
         pop bc
@@ -51,11 +51,12 @@ Unknown006b:
 	ldh a, [$cd]
 	rst $28
 .unknownPtrTable:
-	dw $0078
-	dw $009f
-	dw $00a4
-	dw $00ba
+	dw Unknown0078
+	dw Unknown009f
+	dw Unknown00a4
+	dw Unknown00ba
 	dw $27ea
+Unknown0078:
 	ldh a,[$e1]
 	cp $07
 	jr z, .jrone
@@ -78,3 +79,44 @@ Unknown006b:
 	xor a
 .jrthr	ldh [$02], a
 	ret
+Unknown009f:
+	ldh a,[$01]
+	ldh [$d0],a
+	ret
+Unknown00a4:
+        ldh a, [$01]
+        ldh [$d0], a
+        ldh a, [$cb]
+        cp $29
+        ret z
+        ldh a, [$cf]
+        ldh [$01], a
+        ld a, $ff
+        ldh [$cf], a
+        ld a, $80
+        ldh [$02], a
+        ret
+Unknown00ba:
+        ldh a, [$01]
+        ldh [$d0], a
+        ldh a, [$cb]
+        cp $29
+        ret z
+        ldh a, [$cf]
+        ldh [$01], a
+        ei
+        call $0a98
+        ld a, $80
+        ldh [$02], a
+        ret
+        ldh a, [$cd]
+        cp $02
+        ret nz
+        xor a
+        ldh [$0f], a
+        ei
+        ret
+	fillff ($100-$da)
+entrypoint:
+	nop
+	jp $0150
