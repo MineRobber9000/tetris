@@ -164,7 +164,7 @@ VBlank:
 	push hl
 	ldh a, [$ce]
 	and a
-	jr z, $12
+	jr z, .jrone
 	ldh a, [$cb]
 	cp $29
 	jr nz, .jrone
@@ -198,7 +198,7 @@ VBlank:
 	call $18ca
 	ld a, [$c0ce]
 	and a
-	jr z, $1a
+	jr z, .jrtwo
 	ldh a, [$98]
 	cp $03
 	jr nz, .jrtwo
