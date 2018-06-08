@@ -12,4 +12,4 @@ install:
     wget https://tilde.town/~minerobber/tetris/baserom.gb
 script:
   - make
-  - make compare
+  - make verify
