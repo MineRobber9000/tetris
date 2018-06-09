@@ -3,18 +3,18 @@
 INCLUDE "macros.asm"
 
 SECTION "Interrupt Handlers",ROM0[$0040]
-VBlankIRQ:
+VBlankIRQ::
 	jp $017e
 	fillff 5
-LCDStatIRQ:
+LCDStatIRQ::
 	jp DummyInterruptHandler
 	fillff 5
-TimerIRQ:
+TimerIRQ::
 	jp DummyInterruptHandler
 	fillff 5
-SerialIRQ:
+SerialIRQ::
 	jp Unknown005b
-Unknown005b:
+Unknown005b::
 	push af
 	push hl
 	push de
@@ -27,16 +27,16 @@ Unknown005b:
 	pop hl
 	pop af
 	reti
-Unknown006b:
+Unknown006b::
 	ldh a, [$cd]
 	rst $28
-.unknownPtrTable:
+.unknownPtrTable::
 	dw Unknown0078
 	dw Unknown009f
 	dw Unknown00a4
 	dw Unknown00ba
 	dw $27ea
-Unknown0078:
+Unknown0078::
 	ldh a,[$e1]
 	cp $07
 	jr z, .jrone
@@ -59,11 +59,11 @@ Unknown0078:
 	xor a
 .jrthr	ldh [$02], a
 	ret
-Unknown009f:
+Unknown009f::
 	ldh a,[$01]
 	ldh [$d0],a
 	ret
-Unknown00a4:
+Unknown00a4::
 	ldh a, [$01]
 	ldh [$d0], a
 	ldh a, [$cb]
@@ -76,7 +76,7 @@ Unknown00a4:
 	ld a, $80
 	ldh [$02], a
 	ret
-Unknown00ba:
+Unknown00ba::
 	ldh a, [$01]
 	ldh [$d0], a
 	ldh a, [$cb]
@@ -89,7 +89,7 @@ Unknown00ba:
 	ld a, $80
 	ldh [$02], a
 	ret
-Unused00d0:
+Unused00d0::
 	ldh a, [$cd]
 	cp $02
 	ret nz
@@ -98,13 +98,13 @@ Unused00d0:
 	ei
 	ret
 	fillff ($100-$da)
-entrypoint:
+entrypoint::
 	nop
 	jp $0150
 SECTION "Main",ROM0[$0150]
-entrypoint2:
-	jp $020c
-Unused0153:
+entrypoint2::
+	jp Unknown020c
+Unused0153::
 	call $29e3
 .loop	ldh a, [$41]
 	and $03
@@ -116,7 +116,7 @@ Unused0153:
 	ld a, [hl]
 	and b
 	ret
-Unknown0166:
+Unknown0166::
         ld a, e
         add [hl]
         daa
@@ -137,7 +137,7 @@ Unknown0166:
         ldd [hl], a
         ld [hl], a
         ret
-VBlank:
+VBlank::
 	push af
 	push bc
 	push de
@@ -202,8 +202,8 @@ VBlank:
 	pop bc
 	pop af
 	reti
-loc_020c:
+Unknown020c::
 	xor a
 SECTION "Temp Section",ROM0[$26be]
-DummyInterruptHandler:
+DummyInterruptHandler::
 	reti

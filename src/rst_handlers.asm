@@ -3,19 +3,19 @@
 INCLUDE "macros.asm"
 
 SECTION "RST Vectors",ROM0[$0000]
-rst00:
-	jp $020c
+rst00::
+	jp Unkown020c
 	fillnull 5
-rst08:
-	jp $020c
-	fillff 5 ; 29
-rst10:
+rst08::
+	jp Unkown020c
+	fillff 5
+rst10::
 	fillff 8
-rst18:
+rst18::
 	fillff 8
-rst20:
+rst20::
 	fillff 8
-Jumptable: ; rst $28
+Jumptable:: ; rst $28
 	add a
 	pop hl
 	ld e,a
