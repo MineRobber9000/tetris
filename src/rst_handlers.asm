@@ -4,10 +4,10 @@ INCLUDE "macros.asm"
 
 SECTION "RST Vectors",ROM0[$0000]
 rst00::
-	jp Unkown020c
+	jp Unknown020c
 	fillnull 5
 rst08::
-	jp Unkown020c
+	jp Unknown020c
 	fillff 5
 rst10::
 	fillff 8
