@@ -2,26 +2,6 @@
 
 INCLUDE "macros.asm"
 
-SECTION "RST Handlers",ROM0[$0000]
-rst00:
-	jp $020c
-	fillnull 5
-rst08:
-	jp $020c
-	fillff 29
-Jumptable: ; rst $28
-	add a
-	pop hl
-	ld e,a
-	ld d,$00
-	add hl,de
-	ld e,[hl]
-	inc hl
-	ld d,[hl]
-	push de
-	pop hl
-	jp hl
-	fillff 12
 SECTION "Interrupt Handlers",ROM0[$0040]
 VBlankIRQ:
 	jp $017e
@@ -222,6 +202,8 @@ VBlank:
 	pop bc
 	pop af
 	reti
+loc_020c:
+	xor a
 SECTION "Temp Section",ROM0[$26be]
 DummyInterruptHandler:
 	reti
