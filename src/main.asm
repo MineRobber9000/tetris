@@ -204,6 +204,16 @@ VBlank::
 	reti
 Unknown020c::
 	xor a
-SECTION "Temp Section",ROM0[$26be]
+	; clear loop (clears $cfff-$dfff):
+	; Uses cb (not bc) for whatever reason as a loop counter.
+	ld hl,$dfff
+	ld c,$10
+	ld b,$00
+.loop	ld [hld],a
+	dec b
+	jr nz,.loop
+	dec c
+	jr nz,.loop
+SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
