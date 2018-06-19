@@ -2,3 +2,4 @@ baserom.gb
 *.o
 tetris.gb
 tools/scan_includes
+tetris.sym
