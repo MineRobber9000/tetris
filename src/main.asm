@@ -1,10 +1,11 @@
 ; The main source file
 
 INCLUDE "macros.asm"
+INCLUDE "hardware.inc"
 
 SECTION "Interrupt Handlers",ROM0[$0040]
 VBlankIRQ::
-	jp $017e
+	jp VBlank
 	fillff 5
 LCDStatIRQ::
 	jp DummyInterruptHandler
@@ -100,17 +101,21 @@ Unused00d0::
 	fillff ($100-$da)
 entrypoint::
 	nop
-	jp $0150
+	jp entrypoint2
+SECTION "Unknown014b",ROM0[$014B]
+Unknown014b::
+	ld bc, $0a01
+	ld d, $bf
 SECTION "Main",ROM0[$0150]
 entrypoint2::
 	jp Unknown020c
 Unused0153::
 	call $29e3
-.loop	ldh a, [$41]
+.loop	ldh a, [rSTAT]
 	and $03
 	jr nz, .loop
 	ld b, [hl]
-.loop2	ldh a, [$41]
+.loop2	ldh a, [rSTAT]
 	and $03
 	jr nz, .loop2
 	ld a, [hl]
@@ -216,6 +221,15 @@ Unknown020c::
 	jr nz,.loop
 	ld a,$01
 	di
+	ld [rIF],a
+	ld [rIE],a
+	xor a
+	ld [rSCY],a
+	ld [rSCX],a
+	ld [$ffa4],a
+	ld [rSTAT],a
+	ld [rSB],a
+	ld [rSC],a
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
