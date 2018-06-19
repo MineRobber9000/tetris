@@ -3,3 +3,4 @@ baserom.gb
 tetris.gb
 tools/scan_includes
 tetris.sym
+*.pyc

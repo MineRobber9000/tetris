@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+import os,symfile,re
+
+address = re.compile(r"\$([0-9a-f][0-9a-f][0-9a-f][0-9a-f])")
+
+os.chdir("/home/khuxkm/code/tetris")
+
+s = symfile.SymFile("tetris.sym")
+
+for file in os.listdir("src"):
+	if not file.endswith(".asm"):
+		continue
+	print("src/{}: ".format(file))
+	with open("src/"+file) as f:
+		for l in f:
+			l = l.rstrip().lower()
+			if l.startswith("section"): # section directives are meant to be hardcoded
+				continue
+			m = address.search(l)
+			if m:
+				addresses = [x.split()[0].split(":")[1].lower() for x in s.all_labels]
+				if m.group(1) in addresses:
+					print("Hardcoded address in \"{}\", should use {}".format(l.lstrip(),s.all_labels[addresses.index(m.group(1))].split()[1]))
