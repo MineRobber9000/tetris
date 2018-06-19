@@ -6,7 +6,7 @@ tetris.gb: $(OBJFILES)
 	rgbfix -t "TETRIS" -r 0x00 -n 0x01 -l 0x01 tetris.gb
 
 %.o: %.asm
-	rgbasm -o $@ $^
+	rgbasm -o $@ -iinc/ $^
 
 .PHONY: verify clean
 verify:
