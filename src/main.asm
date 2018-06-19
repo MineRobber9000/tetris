@@ -206,7 +206,7 @@ Unknown020c::
 	xor a
 	; clear loop (clears $cfff-$dfff):
 	; Uses cb (not bc) for whatever reason as a loop counter.
-	ld hl,$dfff
+	ld hl,wUnknownDFFF
 	ld c,$10
 	ld b,$00
 .loop	ld [hld],a
@@ -214,6 +214,8 @@ Unknown020c::
 	jr nz,.loop
 	dec c
 	jr nz,.loop
+	ld a,$01
+	di
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
