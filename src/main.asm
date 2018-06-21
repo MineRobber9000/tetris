@@ -214,11 +214,11 @@ Unknown020c::
 	ld hl,wUnknownDFFF
 	ld c,$10
 	ld b,$00
-.loop	ld [hld],a
+.cloop	ld [hld],a
 	dec b
-	jr nz,.loop
+	jr nz,.cloop
 	dec c
-	jr nz,.loop
+	jr nz,.cloop
 	ld a,$01
 	di
 	ld [rIF],a
@@ -230,6 +230,27 @@ Unknown020c::
 	ld [rSTAT],a
 	ld [rSB],a
 	ld [rSC],a
+	ld a, LCDCF_ON ; turn on LCD
+	ld [rLCDC],a
+.wloop	ld a,[rLY]
+	cp $94
+	jr nz,.wloop
+	ld a, LCDCF_OBJON | LCDCF_BGON
+	ld [rLCDC],a
+	ld a, %11100100
+	ld [rBGP],a
+	ld [rOBP0],a
+	ld a, %11000100
+	ld [rOBP1],a
+	ld hl, rNR52
+	ld a, $80
+	ld [hld],a
+	ld a, $ff
+	ld [hld],a
+	ld [hl],$77
+	ld a,$01
+	ld [rROMB0],a
+	ld sp,$cfff
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
