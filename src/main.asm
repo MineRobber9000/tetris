@@ -250,7 +250,7 @@ Unknown020c::
 	ld [hl],$77
 	ld a,$01
 	ld [rROMB0],a
-	ld sp,$cfff
+	ld sp,wStack
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
