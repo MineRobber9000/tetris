@@ -16,6 +16,7 @@ for file in os.listdir("src"):
 			l = l.rstrip().lower()
 			if l.startswith("section"): # section directives are meant to be hardcoded
 				continue
+			l = l.split(";",1)[0].rstrip() # ignore comments
 			m = address.search(l)
 			if m:
 				addresses = [x.split()[0].split(":")[1].lower() for x in s.all_labels]
