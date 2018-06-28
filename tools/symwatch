@@ -12,13 +12,15 @@ for file in os.listdir("src"):
 		continue
 	print("src/{}: ".format(file))
 	with open("src/"+file) as f:
-		for l in f:
-			l = l.rstrip().lower()
-			if l.startswith("section"): # section directives are meant to be hardcoded
-				continue
-			l = l.split(";",1)[0].rstrip() # ignore comments
-			m = address.search(l)
-			if m:
-				addresses = [x.split()[0].split(":")[1].lower() for x in s.all_labels]
-				if m.group(1) in addresses:
-					print("Hardcoded address in \"{}\", should use {}".format(l.lstrip(),s.all_labels[addresses.index(m.group(1))].split()[1]))
+		lines = [l.lower().rstrip() for l in f]
+	for i in range(len(lines)):
+		l = lines[i]
+		l = l.rstrip().lower()
+		if l.startswith("section"): # section directives are meant to be hardcoded
+			continue
+		l = l.split(";",1)[0].rstrip() # ignore comments
+		m = address.search(l)
+		if m:
+			addresses = [x.split()[0].split(":")[1].lower() for x in s.all_labels]
+			if m.group(1) in addresses:
+				print("Hardcoded address in line {!s}, should use {}".format(i,s.all_labels[addresses.index(m.group(1))].split()[1]))
