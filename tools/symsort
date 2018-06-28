@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import symfile,os
+
+os.chdir("/home/khuxkm/code/tetris")
+
+s = symfile.SymFile("tetris.sym")
+
+with open("tetris.sym","w") as f:
+	f.write("\n".join(s.all_labels))
