@@ -9,8 +9,10 @@ tetris.gb: $(OBJFILES)
 %.o: %.asm
 	rgbasm -o $@ -iinc/ $^
 
-.PHONY: verify clean
+.PHONY: verify clean symwatch
 verify:
 	@md5sum -c tetris.md5
 clean:
 	rm tetris.gb tetris.sym $(OBJFILES)
+symwatch:
+	tools/symwatch
