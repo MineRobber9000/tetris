@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-import symfile,os
-
-os.chdir("/home/khuxkm/code/tetris")
+import symfile
 
 s = symfile.SymFile("tetris.sym")
 
