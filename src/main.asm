@@ -251,6 +251,35 @@ Unknown020c::
 	ld a,$01
 	ld [rROMB0],a
 	ld sp,wStack
+	xor a
+	ld hl,wUnknownDFFF
+	ld b,$00
+.crloop	ld [hld],a
+	dec b
+	jr nz,.crloop
+	ld hl,wStack		; Clear $1000 bytes off of the top of the stack
+	ld c,$10
+	ld b,$00
+.csloop	ld [hld],a
+	dec b
+	jr nz,.csloop
+	dec c
+	jr nz,.csloop
+	ld hl,$9FFF
+	ld c,$20
+	xor a
+	ld b,$00
+.cvloop	ld [hld],a
+	dec b
+	jr nz,.cvloop
+	dec c
+	jr nz,.cvloop
+	ld hl,$feff
+	ld b,$00
+.culoop	ld [hld],a
+	dec b
+	jr nz,.culoop
+
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
