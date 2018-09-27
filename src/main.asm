@@ -279,6 +279,11 @@ Unknown020c::
 .culoop	ld [hld],a
 	dec b
 	jr nz,.culoop
+	ld hl,$fffe ; clear HRAM
+	ld b, $80
+.chloop	ld [hld],a
+	dec b
+	jr nz,.chloop
 
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
