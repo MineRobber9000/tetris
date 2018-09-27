@@ -292,6 +292,19 @@ Unknown020c::
 	inc c
 	dec b
 	jr nz,.hcloop
+	call $2795
+	call $7ff3
+	ld a,$09
+	ld [rIE],a
+	ld a, $37
+	ld [$FFC0],a
+	ld a, $1c
+	ld [$FFC1],a
+	ld a, $24
+	ld [$FFE1],a
+	ld a, LCDCF_ON
+	ld [rLCDC],a
+	ei
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
