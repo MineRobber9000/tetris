@@ -279,12 +279,19 @@ Unknown020c::
 .culoop	ld [hld],a
 	dec b
 	jr nz,.culoop
-	ld hl,$fffe ; clear HRAM
+	ld hl,$fffe		; clear HRAM
 	ld b, $80
 .chloop	ld [hld],a
 	dec b
 	jr nz,.chloop
-
+	ld c,$b6		; Copies $0c bytes from $2a7f to $ffb6, reversing direction. (reason unknown)
+	ld b,$0c
+	ld hl,$2a7f
+.hcloop	ld a,[hli]
+	ldh [c],a
+	inc c
+	dec b
+	jr nz,.hcloop
 SECTION "DummyInterruptHandler Temp Section",ROM0[$26be]
 DummyInterruptHandler::
 	reti
