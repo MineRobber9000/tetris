@@ -288,7 +288,7 @@ Unknown020c::
 	ld b,$0c
 	ld hl,$2a7f
 .hcloop	ld a,[hli]
-	ldh [c],a
+	ld [$ff00+c], a
 	inc c
 	dec b
 	jr nz,.hcloop
