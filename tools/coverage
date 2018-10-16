@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+import re
+
+SECTION_LINE = re.compile(r'SECTION: \$([0-9A-F]{4,4})-\$([0-9A-F]{4,4}) \(\$([0-9A-F]{4,4}) bytes\) \["(.+)"\]')
+
+MAP_FILE = "tetris.map"
+
+sections = []
+with open(MAP_FILE) as f:
+	sections = [l.strip() for l in f if l.strip().startswith("SECTION")]
+
+coverage = [False for x in range(32768)]
+def mark(begin,end):
+	global coverage
+	coverage[begin:end] = [True for x in range(end-begin)]
+
+for section in sections:
+	g = SECTION_LINE.match(section).groups()
+	if int(g[1],16)>0x8000:
+		continue
+	print("Section \"{}\" is from ${} to ${}".format(g[3],g[0],g[1]))
+	mark(int(g[0],16),int(g[1],16))
+
+print("{:.2%} coverage".format(len([x for x in coverage if x])/32768.))
